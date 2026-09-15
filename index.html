@@ -10,21 +10,69 @@
 
   <div id="start-screen">
     <div class="start-card">
-      <div class="title-badge">EXPEDIÇÃO URBANA</div>
-      <h1 class="game-title">BUS RUNNING</h1>
-      <p class="start-subtitle">Pressione o botão para dar a largada na corrida!</p>
       
-      <button id="start-btn">
-        <svg class="btn-bus-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/>
-        </svg>
-        <span class="btn-text">EMBARCAR</span>
-      </button>
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-route">LINHA 100 KM • RÁPIDO</span>
+      </div>
+
+      <div class="led-display-board">
+        <div class="led-grid-overlay"></div>
+        <div class="title-badge">EXPEDIÇÃO URBANA</div>
+        <h1 class="game-title">BUS RUNNING</h1>
+      </div>
+      
+      <div class="bus-stop-pole">
+        <button id="start-btn" class="bus-stop-sign" title="Clique para iniciar">
+          <div class="sign-inner-ring">
+            <svg class="btn-bus-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/>
+            </svg>
+            <span class="btn-text">INICIAR</span>
+            <span class="stop-code">PARADA 01</span>
+          </div>
+        </button>
+        <div class="pole-bar"></div>
+        <div class="pole-base"></div>
+      </div>
+
+      <div class="mini-road-floor">
+        <div class="mini-road-bush-bg"></div>
+        <div class="mini-road-dashes"></div>
+      </div>
+
     </div>
   </div>
 
   <div id="countdown-overlay" class="hidden">
     <div id="countdown-number">3</div>
+  </div>
+
+  <div id="winner-banner" class="hidden">
+    <div class="winner-card">
+      
+      <div class="terminal-header">
+        <span class="terminal-dot green"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot red"></span>
+        <span class="terminal-route">CHEGADA • LINHA 100 KM</span>
+      </div>
+
+      <div class="winner-trophy-wrapper">
+        <svg class="winner-trophy-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V18H8v2h8v-2h-3v-2.1c2.16-.4 3.84-2.11 4.39-4.34C19.08 11.25 21 9.17 21 6.62V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+        </svg>
+      </div>
+
+      <div class="led-display-board winner-led-board">
+        <div class="led-grid-overlay"></div>
+        <h2 id="winner-title">GRANDE CAMPEÃO!</h2>
+        <p id="winner-text">O ÔNIBUS VERDE VENCEU A CORRIDA!</p>
+      </div>
+
+    </div>
   </div>
 
   <div id="game-container">
@@ -38,14 +86,14 @@
 
     <div id="total-distance-hud">
       <div class="hud-label">DISTÂNCIA PERCORRIDA</div>
-      <div class="hud-value"><span id="total-dist">0.00</span> <small>KM</small></div>
+      <div class="hud-value"><span id="total-dist">0.00</span> <small>/ 100 KM</small></div>
     </div>
 
     <div id="speedometers-hud">
       <div class="speed-card bus-1-card">
         <div class="speed-header">
           <span class="bus-dot dot-green"></span>
-          <span class="bus-name">ÔNIBUS 1</span>
+          <span class="bus-name">VERDE</span>
         </div>
         <div class="speed-body">
           <span id="speed-1" class="speed-num">0</span>
@@ -59,7 +107,7 @@
       <div class="speed-card bus-2-card">
         <div class="speed-header">
           <span class="bus-dot dot-yellow"></span>
-          <span class="bus-name">ÔNIBUS 2</span>
+          <span class="bus-name">AMARELO</span>
         </div>
         <div class="speed-body">
           <span id="speed-2" class="speed-num">0</span>
@@ -86,16 +134,29 @@
     </div>
 
     <div class="track-area" id="track-area">
+      <div class="finish-line" id="finish-line"></div>
+
       <div class="lane" id="lane-1">
         <div class="road-lines" id="road-1"></div>
-        <div class="bus bus-1-img" id="bus-1"></div>
+        <div class="bus bus-1-img" id="bus-1">
+          <div class="bus-wind-effect">
+            <span class="smoke-puff puff-1"></span>
+            <span class="smoke-puff puff-2"></span>
+            <span class="smoke-puff puff-3"></span>
+          </div>
+        </div>
       </div>
 
       <div class="lane" id="lane-2">
         <div class="road-lines" id="road-2"></div>
-        <div class="bus bus-2-img" id="bus-2"></div>
+        <div class="bus bus-2-img" id="bus-2">
+          <div class="bus-wind-effect">
+            <span class="smoke-puff puff-1"></span>
+            <span class="smoke-puff puff-2"></span>
+            <span class="smoke-puff puff-3"></span>
+          </div>
+        </div>
       </div>
-    </div>
 
   </div>
 

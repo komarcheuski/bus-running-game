@@ -1,0 +1,450 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+  background-color: #0f172a;
+}
+
+#start-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.start-card {
+  text-align: center;
+  background: rgba(15, 23, 42, 0.75);
+  border: 2px solid rgba(245, 158, 11, 0.4);
+  backdrop-filter: blur(25px);
+  padding: 55px 75px;
+  border-radius: 28px;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 158, 11, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 520px;
+}
+
+.title-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.game-title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+  margin-bottom: 8px;
+}
+
+.start-subtitle {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 35px;
+}
+
+#start-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 55px;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+#start-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.btn-bus-icon {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+#countdown-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 90;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#countdown-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#countdown-number {
+  font-size: 9rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.8), 0 10px 20px rgba(0, 0, 0, 0.5);
+  animation: pulseCount 0.8s ease infinite alternate;
+}
+
+@keyframes pulseCount {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#restart-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 18px;
+  color: #f8fafc;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+#restart-btn:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#restart-btn svg {
+  transition: transform 0.4s ease;
+}
+
+#restart-btn:hover svg {
+  transform: rotate(-180deg);
+}
+
+#total-distance-hud {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 32px;
+  border-radius: 30px;
+  text-align: center;
+}
+
+.hud-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+}
+
+.hud-value {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #f8fafc;
+  font-family: monospace;
+}
+
+#speedometers-hud {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.speed-card {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 16px;
+  width: 180px;
+}
+
+.speed-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.bus-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-green { background-color: #10b981; }
+.dot-yellow { background-color: #f59e0b; }
+.bus-name { font-size: 0.75rem; font-weight: 800; color: #cbd5e1; }
+.speed-body { display: flex; align-items: baseline; justify-content: space-between; }
+.speed-num { font-size: 2rem; font-weight: 900; color: #ffffff; font-family: monospace; }
+.speed-unit { font-size: 0.75rem; font-weight: 700; color: #64748b; }
+.speed-bar-bg { width: 100%; height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.speed-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+.fill-green { background: linear-gradient(90deg, #059669, #34d399); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+.sky {
+  position: relative;
+  height: 60%; 
+  background: linear-gradient(to bottom, #7dd3fc, #bae6fd);
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 100px;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+}
+
+.cloud1 {
+  top: 25px;
+  width: 120px;
+  height: 35px;
+  animation: moveClouds 22s linear infinite;
+}
+.cloud1::before {
+  width: 50px;
+  height: 50px;
+  top: -22px;
+  left: 15px;
+}
+.cloud1::after {
+  width: 40px;
+  height: 40px;
+  top: -15px;
+  right: 18px;
+}
+
+.cloud2 {
+  top: 65px;
+  width: 150px;
+  height: 40px;
+  opacity: 0.85;
+  animation: moveClouds 28s linear infinite;
+  animation-delay: -8s;
+}
+.cloud2::before {
+  width: 60px;
+  height: 60px;
+  top: -28px;
+  left: 20px;
+}
+.cloud2::after {
+  width: 45px;
+  height: 45px;
+  top: -18px;
+  right: 22px;
+}
+
+.cloud3 {
+  top: 35px;
+  width: 100px;
+  height: 30px;
+  opacity: 0.95;
+  animation: moveClouds 18s linear infinite;
+  animation-delay: -14s;
+}
+.cloud3::before {
+  width: 40px;
+  height: 40px;
+  top: -18px;
+  left: 12px;
+}
+.cloud3::after {
+  width: 32px;
+  height: 32px;
+  top: -12px;
+  right: 14px;
+}
+
+.cloud4 {
+  top: 105px;
+  width: 130px;
+  height: 38px;
+  opacity: 0.8;
+  animation: moveClouds 34s linear infinite;
+  animation-delay: -22s;
+}
+.cloud4::before {
+  width: 52px;
+  height: 52px;
+  top: -24px;
+  left: 18px;
+}
+.cloud4::after {
+  width: 40px;
+  height: 40px;
+  top: -16px;
+  right: 20px;
+}
+
+.city-layer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-position: 0px bottom;
+}
+
+.layer-back {
+  bottom: 0;
+  height: 220px;
+  background-image: url('city-back.png');
+  background-size: auto 100%;
+  z-index: 1;
+}
+
+.layer-front {
+  bottom: 0;
+  height: 150px;
+  background-image: url('city-front.png');
+  background-size: auto 100%;
+  z-index: 2;
+}
+
+.grass-vector-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 190px;
+  background-image: url('grass-vector.png');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  background-position: 0px bottom;
+  z-index: 3;
+}
+
+.green-support-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  background-color: #aaa7a7;
+  border-top: 3px solid #858383;
+  z-index: 4;
+}
+
+.track-area {
+  position: relative;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lane {
+  position: relative;
+  flex: 1;
+  background-color: #334155;
+  border-top: 4px solid #ffffff;
+  overflow: visible;
+}
+
+.lane:last-child {
+  border-bottom: 4px solid #ffffff;
+}
+
+.road-lines {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 200%;
+  height: 8px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    #ffffff 0px,
+    #ffffff 50px,
+    transparent 50px,
+    transparent 200px
+  );
+  animation: moveRoadBalanced 0.3s linear infinite;
+}
+
+.bus {
+  position: absolute;
+  bottom: -15px;
+  width: 460px;
+  height: 250px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  z-index: 20;
+  filter: drop-shadow(0px 12px 10px rgba(0,0,0,0.4));
+}
+
+.bus-1-img { background-image: url('bus-1.png'); }
+.bus-2-img { background-image: url('bus-2.png'); }
+
+@keyframes moveClouds {
+  0% { transform: translateX(110vw); }
+  100% { transform: translateX(-200px); }
+}
+
+@keyframes moveRoadBalanced {
+  0% { transform: translate(0, -50%); }
+  100% { transform: translate(-200px, -50%); }
+}

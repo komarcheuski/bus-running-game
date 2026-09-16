@@ -40,7 +40,7 @@ let bgFrontX = 0;
 let bgGrassX = 0;
 
 let audioCtx = null;
-let chosenWinner = null; 
+let chosenWinner = null;
 
 function initAudio() {
   if (!audioCtx) {
@@ -50,12 +50,12 @@ function initAudio() {
 
 function playStartEngineSound() {
   if (!audioCtx) return;
- 
+
   function playHornBeep(delay, frequency) {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
 
-    osc.type = 'square'; // Som marcante e cartonesco
+    osc.type = 'square';
     osc.frequency.setValueAtTime(frequency, audioCtx.currentTime + delay);
 
     gain.gain.setValueAtTime(0.12, audioCtx.currentTime + delay);
@@ -68,7 +68,6 @@ function playStartEngineSound() {
     osc.stop(audioCtx.currentTime + delay + 0.15);
   }
 
-  // Toque duplo rápido: BEEP! BEEP!
   playHornBeep(0, 420);
   playHornBeep(0.18, 420);
 }
@@ -79,16 +78,16 @@ function playVictorySound() {
   notes.forEach((freq, idx) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    
+
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.12);
-    
+
     gain.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.12);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.12 + 0.4);
-    
+
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    
+
     osc.start(audioCtx.currentTime + idx * 0.12);
     osc.stop(audioCtx.currentTime + idx * 0.12 + 0.4);
   });
@@ -125,7 +124,7 @@ function gameLoop() {
 
   bgBackX -= (avgSpeed / 90) * 1.5;
   bgFrontX -= (avgSpeed / 90) * 3.5;
-  bgGrassX -= (avgSpeed / 90) * 4.0;
+  bgGrassX -= (avgSpeed / 90) * 7.0;
 
   if (layerBack) layerBack.style.backgroundPositionX = `${bgBackX}px`;
   if (layerFront) layerFront.style.backgroundPositionX = `${bgFrontX}px`;
@@ -159,8 +158,8 @@ function gameLoop() {
 
   if (!isFinishingPhase) {
     totalDistance += (avgSpeed / 3600) * 0.45;
-    if (totalDistance >= 100.0) {
-      totalDistance = 100.0;
+    if (totalDistance >= 50.0) {
+      totalDistance = 50.0;
       triggerFinishSequence();
     }
     totalDistEl.textContent = totalDistance.toFixed(2);
@@ -171,8 +170,7 @@ function gameLoop() {
 
 function triggerFinishSequence() {
   isFinishingPhase = true;
-  
- 
+
   chosenWinner = Math.random() < 0.5 ? "VERDE" : "AMARELO";
 
   finishLine.classList.add('active');
@@ -182,13 +180,18 @@ function triggerFinishSequence() {
 
     playVictorySound();
 
-    winnerText.textContent = `O ÔNIBUS ${chosenWinner} VENCEU A CORRIDA!`;
+    winnerText.textContent = `O ÔNIBUS ${chosenWinner} VENCEU!`;
     winnerText.style.color = colorHex;
+    winnerText.style.textShadow = `0 0 15px ${colorHex}aa, 0 0 30px ${colorHex}55`;
+
     winnerCard.style.borderColor = colorHex;
-    winnerCard.style.boxShadow = `0 0 60px ${colorHex}aa`;
+    winnerCard.style.boxShadow = `0 30px 70px rgba(0, 0, 0, 0.9), 0 0 50px ${colorHex}88`;
 
     const trophyIcon = document.querySelector('.winner-trophy-icon');
-    if (trophyIcon) trophyIcon.style.color = colorHex;
+    if (trophyIcon) {
+      trophyIcon.style.color = colorHex;
+      trophyIcon.style.filter = `drop-shadow(0 0 12px ${colorHex})`;
+    }
 
     winnerBanner.classList.remove('hidden');
 
@@ -222,7 +225,7 @@ function resetGame() {
   gameRunning = false;
   isFinishingPhase = false;
   chosenWinner = null;
-  
+
   if (animationFrameId) cancelAnimationFrame(animationFrameId);
   if (targetTimeoutId) clearTimeout(targetTimeoutId);
 
